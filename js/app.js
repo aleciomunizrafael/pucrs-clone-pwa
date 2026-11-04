@@ -4,6 +4,7 @@
 (function () {
   const I = window.ICON;
   const D = window.DATA;
+  const appEl = document.getElementById("app");
   const screen = document.getElementById("screen");
   const tabbar = document.getElementById("tabbar");
   const modalRoot = document.getElementById("modal-root");
@@ -19,7 +20,7 @@
   const TABS = [
     { id: "home", label: "Home", icon: "home" },
     { id: "academico", label: "Acadêmico", icon: "cap" },
-    { id: "estacionamento", label: "Estacionam...", icon: "car" },
+    { id: "estacionamento", label: "Estacionamento", icon: "car" },
     { id: "biblioteca", label: "Biblioteca", icon: "book" },
     { id: "menu", label: "Menu", icon: "menu" },
   ];
@@ -279,9 +280,10 @@
       )
       .join("");
 
+    const prevFocus = document.activeElement;
     const backdrop = el(`<div class="modal-backdrop"></div>`);
     const sheet = el(`
-      <div class="sheet" role="dialog" aria-modal="true">
+      <div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(course.name)}">
         <button class="close-x" aria-label="Fechar">${I.x()}</button>
         <div class="m-title">${esc(course.name)}</div>
         <div class="m-meta"><span>${esc(course.turma)}</span><span>${esc(course.prof)}</span></div>
@@ -290,19 +292,30 @@
       </div>`);
 
     modalRoot.append(backdrop, sheet);
+    appEl.inert = true; // block + trap focus in the background
+    screen.style.overflow = "hidden"; // stop background scroll bleed-through
     requestAnimationFrame(() => {
       backdrop.classList.add("show");
       sheet.classList.add("show");
     });
+    sheet.querySelector(".btn-close").focus();
 
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+    };
     const close = () => {
+      document.removeEventListener("keydown", onKey);
       backdrop.classList.remove("show");
       sheet.classList.remove("show");
+      appEl.inert = false;
+      screen.style.overflow = "";
       setTimeout(() => {
         backdrop.remove();
         sheet.remove();
       }, 300);
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
     };
+    document.addEventListener("keydown", onKey);
     backdrop.addEventListener("click", close);
     sheet.querySelector(".close-x").addEventListener("click", close);
     sheet.querySelector(".btn-close").addEventListener("click", close);
@@ -340,12 +353,57 @@
   }
 
   function renderTabs() {
-    tabbar.innerHTML = TABS.map(
-      (t) => `
-      <button class="tab ${state.tab === t.id ? "active" : ""}" data-tab="${t.id}">
+    tabbar.innerHTML = TABS.map((t) => {
+      const active = state.tab === t.id;
+      return `
+      <button class="tab ${active ? "active" : ""}" data-tab="${t.id}"${active ? ' aria-current="page"' : ""}>
         ${I[t.icon]()}<span class="lbl">${esc(t.label)}</span>
-      </button>`
-    ).join("");
+      </button>`;
+    }).join("");
+  }
+
+  // Years that actually have data (for clamping the year stepper)
+  function availableYears() {
+    const ys = new Set(
+      [...Object.keys(D.grades), ...Object.keys(D.frequency)].map(Number)
+    );
+    return [...ys].sort((a, b) => a - b);
+  }
+
+  function updateYearArrows() {
+    const years = availableYears();
+    screen.querySelectorAll("[data-year]").forEach((b) => {
+      const dir = Number(b.dataset.year);
+      const atBound =
+        (dir < 0 && state.year <= years[0]) ||
+        (dir > 0 && state.year >= years[years.length - 1]);
+      b.disabled = atBound;
+      b.style.opacity = atBound ? "0.3" : "";
+    });
+  }
+
+  function bindGradeCards() {
+    screen.querySelectorAll("[data-grade]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const list = D.grades[state.year][state.sem];
+        openGradeModal(list[Number(b.dataset.grade)]);
+      })
+    );
+  }
+
+  // Update ONLY the year/semester controls + list (no full re-render, no scroll reset/flash)
+  function refreshGrades() {
+    const y = screen.querySelector(".year .y");
+    if (y) y.textContent = state.year;
+    screen
+      .querySelectorAll("[data-sem]")
+      .forEach((b) => b.classList.toggle("active", b.dataset.sem === state.sem));
+    updateYearArrows();
+    const list = screen.querySelector(".list");
+    if (list) {
+      list.innerHTML = state.acadRoute === "freq" ? freqList() : notasList();
+      bindGradeCards();
+    }
   }
 
   // ---- Events --------------------------------------------------------------
@@ -386,24 +444,26 @@
 
     screen.querySelectorAll("[data-sem]").forEach((b) =>
       b.addEventListener("click", () => {
+        if (state.sem === b.dataset.sem) return;
         state.sem = b.dataset.sem;
-        render();
+        refreshGrades();
       })
     );
     screen.querySelectorAll("[data-year]").forEach((b) =>
       b.addEventListener("click", () => {
-        state.year += Number(b.dataset.year);
-        render();
+        const years = availableYears();
+        const next = state.year + Number(b.dataset.year);
+        if (next < years[0] || next > years[years.length - 1]) return;
+        state.year = next;
+        refreshGrades();
       })
     );
 
     // grade cards -> modal
-    screen.querySelectorAll("[data-grade]").forEach((b) =>
-      b.addEventListener("click", () => {
-        const list = D.grades[state.year][state.sem];
-        openGradeModal(list[Number(b.dataset.grade)]);
-      })
-    );
+    bindGradeCards();
+
+    // initial enabled/disabled state of the year stepper
+    if (screen.querySelector("[data-year]")) updateYearArrows();
 
     // biblioteca rows
     screen.querySelectorAll("[data-bib]").forEach((b) =>
@@ -424,14 +484,16 @@
   }
 
   // simple toast for not-yet-built actions
-  let toastEl;
+  let toastEl, toastTimer;
   function toast(msg) {
     if (toastEl) toastEl.remove();
-    toastEl = el(
-      `<div style="position:fixed;left:50%;bottom:calc(var(--tabbar-h) + 24px);transform:translateX(-50%);background:var(--surface-3);color:var(--text);padding:12px 20px;border-radius:12px;font-size:14px;z-index:70;box-shadow:0 8px 30px rgba(0,0,0,.5)">${esc(msg)} — em breve</div>`
+    clearTimeout(toastTimer);
+    const node = el(
+      `<div style="position:fixed;left:50%;bottom:calc(var(--tabbar-h) + var(--safe-bottom) + 16px);transform:translateX(-50%);background:var(--surface-3);color:var(--text);padding:12px 20px;border-radius:12px;font-size:14px;z-index:70;box-shadow:0 8px 30px rgba(0,0,0,.5)">${esc(msg)} — em breve</div>`
     );
-    document.body.append(toastEl);
-    setTimeout(() => toastEl && toastEl.remove(), 1800);
+    toastEl = node;
+    document.body.append(node);
+    toastTimer = setTimeout(() => node.remove(), 1800);
   }
 
   tabbar.addEventListener("click", (e) => {

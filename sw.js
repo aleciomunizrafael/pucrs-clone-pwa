@@ -1,5 +1,5 @@
 /* Service worker — app-shell cache for offline / standalone use. */
-const CACHE = "pucrs-clone-v3";
+const CACHE = "pucrs-clone-v4";
 const ASSETS = [
   ".",
   "index.html",
@@ -10,6 +10,7 @@ const ASSETS = [
   "manifest.webmanifest",
   "icons/icon-192.png",
   "icons/icon-512.png",
+  "icons/icon-512-maskable.png",
   "icons/apple-touch-icon.png",
 ];
 
