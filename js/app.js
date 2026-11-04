@@ -73,6 +73,7 @@
 
     return `
       ${header()}
+      <div class="vspacer"></div>
       <section class="greeting">
         <div class="hi">Olá,</div>
         <div class="name">${esc(s.name)}</div>
@@ -80,6 +81,7 @@
         <div class="reg">${esc(s.reg)}</div>
       </section>
 
+      <div class="vspacer"></div>
       <div class="section-head">
         <h2>Próxima aula</h2>
         <button class="round-next" aria-label="Ver agenda">${I.arrowRight()}</button>
@@ -95,7 +97,9 @@
         <div class="nc-loc">${esc(n.location)}</div>
       </div>
 
-      <div class="quick">${qa}</div>`;
+      <div class="vspacer"></div>
+      <div class="quick">${qa}</div>
+      <div class="vspacer"></div>`;
   }
 
   function academicoScreen() {
@@ -344,6 +348,7 @@
         html = homeScreen();
     }
     screen.innerHTML = html;
+    screen.dataset.tab = state.tab;
     screen.firstElementChild && screen.classList.remove("fade-in");
     void screen.offsetWidth;
     screen.classList.add("fade-in");

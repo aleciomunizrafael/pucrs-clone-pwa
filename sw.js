@@ -1,5 +1,5 @@
 /* Service worker — app-shell cache for offline / standalone use. */
-const CACHE = "pucrs-clone-v4";
+const CACHE = "pucrs-clone-v5";
 const ASSETS = [
   ".",
   "index.html",
