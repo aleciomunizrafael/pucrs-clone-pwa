@@ -21,6 +21,23 @@ window.DATA = {
     { icon: "book", color: "c-green", label: "Biblioteca", sub: "Empréstimos", action: "biblioteca" },
   ],
 
+  estacionamento: [
+    { icon: "car", label: "Vagas por estacionamento", action: "vagas" },
+    { icon: "dollar", label: "Créditos", action: "creditos" },
+  ],
+
+  menuItems: [
+    { icon: "dollar", label: "Mensalidades" },
+    { icon: "refresh", label: "Empréstimos de Item" },
+    { icon: "phone", label: "Contatos" },
+    { icon: "users", label: "Vincular Usuário de Rede" },
+    { icon: "tools", label: "Serviços" },
+    { icon: "shield", label: "Política de privacidade" },
+    { icon: "logout", label: "Sair" },
+  ],
+
+  version: "5.14.0",
+
   // Grades (Notas e avaliações) keyed by year -> semester
   grades: {
     2026: {

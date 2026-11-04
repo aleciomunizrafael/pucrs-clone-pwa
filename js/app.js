@@ -218,6 +218,45 @@
       </div>`;
   }
 
+  function estacionamentoScreen() {
+    const rows = D.estacionamento
+      .map(
+        (r) => `
+      <button class="row" data-estac="${esc(r.label)}">${I[r.icon]()}<span class="rlabel">${esc(r.label)}</span><span class="chev">${I.arrowRight()}</span></button>`
+      )
+      .join("");
+    return `
+      ${header({ title: "Estacionamento" })}
+      <div class="rows">${rows}</div>`;
+  }
+
+  function menuScreen() {
+    const s = D.student;
+    const initials = s.name
+      .split(/\s+/)
+      .map((w) => w[0])
+      .slice(0, 2)
+      .join("")
+      .toLowerCase();
+    const rows = D.menuItems
+      .map(
+        (m) => `
+      <button class="row" data-menu="${esc(m.label)}">${I[m.icon]()}<span class="rlabel">${esc(m.label)}</span><span class="chev">${I.arrowRight()}</span></button>`
+      )
+      .join("");
+    return `
+      ${header({ title: "Menu" })}
+      <div class="profile-card">
+        <div class="avatar">${esc(initials)}</div>
+        <div>
+          <div class="pname">${esc(s.name)}</div>
+          <div class="pcourse">${esc(s.course)}<br>Matrícula ${esc(s.reg)}</div>
+        </div>
+      </div>
+      <div class="rows">${rows}</div>
+      <div class="menu-version">${esc(D.version)}</div>`;
+  }
+
   function placeholderScreen(icon, title, text) {
     return `
       ${header({ title })}
@@ -283,10 +322,10 @@
         html = bibliotecaScreen();
         break;
       case "estacionamento":
-        html = placeholderScreen("car", "Estacionamento", "Em breve — reserve vagas e veja a disponibilidade dos campi. Me mande o vídeo desta tela e eu replico fielmente.");
+        html = estacionamentoScreen();
         break;
       case "menu":
-        html = placeholderScreen("menu", "Menu", "Em breve — perfil, serviços e configurações. Me mande o vídeo desta tela e eu replico fielmente.");
+        html = menuScreen();
         break;
       default:
         html = homeScreen();
@@ -369,6 +408,14 @@
     // biblioteca rows
     screen.querySelectorAll("[data-bib]").forEach((b) =>
       b.addEventListener("click", () => toast(b.dataset.bib === "emprestimos" ? "Empréstimos" : "Reservas"))
+    );
+
+    // estacionamento + menu rows
+    screen.querySelectorAll("[data-estac]").forEach((b) =>
+      b.addEventListener("click", () => toast(b.dataset.estac))
+    );
+    screen.querySelectorAll("[data-menu]").forEach((b) =>
+      b.addEventListener("click", () => toast(b.dataset.menu))
     );
   }
 

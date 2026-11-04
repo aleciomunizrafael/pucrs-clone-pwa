@@ -5,12 +5,12 @@
 
 :root {
   /* Surfaces */
-  --bg: #0a0a0b;
-  --bg-header: #121316;
-  --surface: #2a2b30;
+  --bg: #161819;
+  --bg-header: #161819;
+  --surface: #2b2c31;
   --surface-2: #2d2e33;
   --surface-3: #3a3b42;
-  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline: rgba(255, 255, 255, 0.07);
 
   /* Text */
   --text: #f4f5f7;
@@ -18,10 +18,10 @@
   --text-faint: #6c6e77;
 
   /* Accent */
-  --accent: #128fd4;
-  --accent-2: #37c0e6;
-  --accent-grad: linear-gradient(90deg, #159bd8 0%, #35cbe8 100%);
-  --accent-soft: rgba(18, 143, 212, 0.14);
+  --accent: #1b9fd4;
+  --accent-2: #2bc4e2;
+  --accent-grad: linear-gradient(90deg, #189ed6 0%, #32cbe8 100%);
+  --accent-soft: rgba(27, 159, 212, 0.14);
 
   /* Status */
   --green: #2fcf6b;
@@ -251,7 +251,7 @@ button {
 .nc-row svg {
   width: 18px;
   height: 18px;
-  color: var(--accent);
+  color: var(--accent-2);
 }
 .nc-title {
   font-size: 20px;
@@ -580,6 +580,46 @@ button {
   padding: 23px 18px;
 }
 
+/* ---- Menu: profile + version ---------------------------------------------- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 20px 22px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+.profile-card .avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  background: #141619;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.profile-card .pname {
+  font-size: 20px;
+  font-weight: 700;
+}
+.profile-card .pcourse {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.menu-version {
+  text-align: center;
+  color: var(--accent-2);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 20px 0 8px;
+}
+
 /* ---- Placeholder screens -------------------------------------------------- */
 .placeholder {
   display: flex;
@@ -620,7 +660,7 @@ button {
   max-width: 480px;
   height: calc(var(--tabbar-h) + var(--safe-bottom));
   padding-bottom: var(--safe-bottom);
-  background: rgba(13, 14, 18, 0.92);
+  background: rgba(22, 24, 25, 0.92);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-top: 1px solid var(--hairline);
@@ -634,22 +674,24 @@ button {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: var(--text-faint);
+  color: var(--accent); /* icons are colored on every tab */
   font-size: 11px;
-  font-weight: 500;
 }
 .tab svg {
   width: 24px;
   height: 24px;
-}
-.tab.active {
-  color: var(--accent);
 }
 .tab .lbl {
   max-width: 72px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.tab.active .lbl {
+  color: var(--text);
+  font-weight: 700;
 }
 
 /* ---- Modal / bottom sheet ------------------------------------------------- */
