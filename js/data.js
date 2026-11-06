@@ -43,9 +43,9 @@ window.DATA = {
     2026: {
       S1: [
         { status: "Cursada", name: "Cálculo I", turma: "Turma 13", prof: "Iuri Medeiros Jauris", final: "8.4", result: "Aprovado", count: 10, updated: "20/07", evals: [
-          { k: "T1", v: "7.9" }, { k: "T2", v: "8.6" }, { k: "T3", v: "8.3" }, { k: "P1", v: "8.8" } ] },
+          { k: "T1", v: "7.3" }, { k: "T2", v: "8.6" }, { k: "T3", v: "8.9" }, { k: "P1", v: "8.8" } ] },
         { status: "Cursada", name: "Fundamentos De Programação", turma: "Turma 14", prof: "Adriana Paula Zamin Scherer", final: "8.6", result: "Aprovado", count: 9, updated: "18/07", evals: [
-          { k: "T1", v: "8.2" }, { k: "T2", v: "8.7" }, { k: "P1", v: "8.9" } ] },
+          { k: "T1", v: "7.6" }, { k: "T2", v: "8.9" }, { k: "P1", v: "9.3" } ] },
         { status: "Cursada", name: "Matemática Discreta", turma: "Turma 13", prof: "Edson Ifarraguirre Moreno", final: "9.1", result: "Aprovado", count: 8, updated: "08/07", evals: [
           { k: "T1", v: "8.8" }, { k: "T2", v: "9.2" }, { k: "P1", v: "9.3" } ] },
       ],
@@ -59,7 +59,7 @@ window.DATA = {
         { status: "Matriculada", name: "Lógica Para Computação", turma: "Turma 110", prof: "Edson Ifarraguirre Moreno", count: 2, updated: "17/10", evals: [
           { k: "T1", v: "9.2" }, { k: "T2", v: "8.8" } ] },
         { status: "Matriculada", name: "Probabilidade E Estatística", turma: "Turma 110", prof: "Rossana Fraga Benites", count: 4, updated: "21/10", evals: [
-          { k: "T1", v: "8.6" }, { k: "T2", v: "8.9" }, { k: "T3", v: "9.2" }, { k: "P1", v: "9.3" } ] },
+          { k: "T1", v: "7.8" }, { k: "T2", v: "9.2" }, { k: "T3", v: "9.4" }, { k: "P1", v: "9.6" } ] },
         { status: "Matriculada", name: "Programação Orientada A Dados", turma: "Turma 120", prof: "Katherine Bianchini Esper", count: 1, updated: "21/09", evals: [
           { k: "P1", v: "9.0" } ] },
       ],
