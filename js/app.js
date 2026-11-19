@@ -43,7 +43,7 @@
 
   function header({ back = false, logo = true, bell = true, title = "" } = {}) {
     return `
-      <header class="app-header">
+      <header class="app-header${title ? " banner" : ""}">
         ${back ? `<button class="icon-btn ghost" data-back aria-label="Voltar">${I.arrowLeft()}</button>` : `<span></span>`}
         ${logo ? `<div class="logo">PUC<span class="rs">RS</span></div>` : ""}
         ${bell ? `<button class="bell-wrap icon-btn" aria-label="Notificações">${I.bell()}<span class="dot"></span></button>` : `<span></span>`}
@@ -71,9 +71,19 @@
       )
       .join("");
 
+    const banners = `
+      <a class="banner-card bn-cert">
+        <span class="b-tag">CERTIFICAÇÕES PUCRS</span>
+        <div class="b-head">ESCOLHA A SUA<br>E MATRICULE-SE</div>
+        <div class="b-foot">Conhecimentos de forma rápida e com certificado PUCRS.</div>
+      </a>
+      <a class="banner-card bn-sent">
+        <div class="b-head2">Sentimento<br>PUCRS</div>
+        <div class="b-foot2">O que move você a estudar aqui.</div>
+      </a>`;
+
     return `
       ${header()}
-      <div class="vspacer"></div>
       <section class="greeting">
         <div class="hi">Olá,</div>
         <div class="name">${esc(s.name)}</div>
@@ -81,7 +91,6 @@
         <div class="reg">${esc(s.reg)}</div>
       </section>
 
-      <div class="vspacer"></div>
       <div class="section-head">
         <h2>Próxima aula</h2>
         <button class="round-next" aria-label="Ver agenda">${I.arrowRight()}</button>
@@ -97,8 +106,8 @@
         <div class="nc-loc">${esc(n.location)}</div>
       </div>
 
-      <div class="vspacer"></div>
       <div class="quick">${qa}</div>
+      <div class="banners">${banners}</div>
       <div class="vspacer"></div>`;
   }
 
@@ -443,6 +452,8 @@
       b.addEventListener("click", () => {
         const a = b.dataset.qa;
         if (a === "biblioteca") go("biblioteca");
+        else if (a === "frequencia") { state.tab = "academico"; state.acadRoute = "freq"; render(); }
+        else if (a === "cartao") { state.tab = "academico"; state.acadRoute = "cartao"; render(); }
         else toast(labelFor(a));
       })
     );

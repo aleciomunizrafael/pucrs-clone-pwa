@@ -4,30 +4,33 @@
    ========================================================================== */
 
 :root {
-  /* Surfaces */
-  --bg: #161819;
-  --bg-header: #161819;
-  --surface: #2b2c31;
-  --surface-2: #2d2e33;
-  --surface-3: #3a3b42;
-  --hairline: rgba(255, 255, 255, 0.07);
+  /* Surfaces (light theme — matches the real PUCRS app) */
+  --bg: #edf1fd;
+  --bg-header: #edf1fd;
+  --navy: #00477c;          /* next-class card + Acadêmico/Menu header banner */
+  --navy-deep: #003a6b;     /* brand navy: logo, headings, greeting, active tab */
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --surface-3: #e4eaf7;
+  --hairline: rgba(10, 35, 66, 0.10);
+  --shadow: 0 6px 18px rgba(13, 40, 70, 0.07);
 
   /* Text */
-  --text: #f4f5f7;
-  --text-dim: #9a9ca4;
-  --text-faint: #878a92;
+  --text: #13273f;
+  --text-dim: #6c7889;
+  --text-faint: #9aa4b3;
 
   /* Accent */
-  --accent: #1b9fd4;
-  --accent-2: #2bc4e2;
-  --accent-grad: linear-gradient(90deg, #189ed6 0%, #32cbe8 100%);
-  --accent-soft: rgba(27, 159, 212, 0.14);
+  --accent: #2ba7e0;
+  --accent-2: #5ebee6;
+  --accent-grad: linear-gradient(90deg, #1f97d6 0%, #48c3ea 100%);
+  --accent-soft: rgba(43, 167, 224, 0.12);
 
   /* Status */
-  --green: #2fcf6b;
-  --red: #ff5a67;
-  --gold: #e9b64a;
-  --pink: #f0506e;
+  --green: #1faa5a;
+  --red: #e2495a;
+  --gold: #f29d0e;
+  --pink: #ef5a7c;
 
   /* Metrics */
   --radius: 18px;
@@ -109,15 +112,24 @@ button {
 }
 
 /* ---- Header --------------------------------------------------------------- */
+/* Home: light header blending into the lavender bg (navy content).
+   Titled screens (Acadêmico, Menu, grades…): navy rounded banner (white content). */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  padding: calc(var(--safe-top) + 10px) 20px 14px;
-  background: linear-gradient(180deg, var(--bg-header) 72%, rgba(16, 17, 22, 0));
+  padding: calc(var(--safe-top) + 12px) 20px 10px;
+  background: linear-gradient(180deg, var(--bg) 72%, rgba(237, 241, 253, 0));
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
+  color: var(--navy-deep);
+}
+.app-header.banner {
+  background: var(--navy);
+  border-radius: 0 0 26px 26px;
+  color: #fff;
+  padding: calc(var(--safe-top) + 16px) 20px 20px;
 }
 
 .app-header .logo {
@@ -130,11 +142,14 @@ button {
   font-weight: 600;
   font-size: 26px;
   letter-spacing: 0.5px;
-  color: var(--text);
+  color: inherit;
   user-select: none;
 }
 .logo .rs {
   color: var(--accent);
+}
+.app-header.banner .logo .rs {
+  color: var(--accent-2);
 }
 
 .icon-btn {
@@ -143,10 +158,10 @@ button {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--text);
+  color: inherit;
 }
 .icon-btn.ghost {
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
 }
 .icon-btn svg {
   width: 22px;
@@ -166,15 +181,18 @@ button {
   height: 8px;
   border-radius: 50%;
   background: var(--red);
-  border: 2px solid var(--bg-header);
+  border: 2px solid var(--bg);
+}
+.app-header.banner .bell-wrap .dot {
+  border-color: var(--navy);
 }
 
 .screen-title {
   grid-column: 1 / -1;
   text-align: center;
-  color: var(--accent);
+  color: #fff;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 10px;
 }
 
@@ -187,22 +205,22 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 22px 20px 12px;
+  margin: 24px 20px 14px;
 }
 .section-head h2 {
   margin: 0;
-  color: var(--accent);
+  color: var(--navy-deep);
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 700;
 }
 .round-next {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--surface-2);
+  background: var(--surface-3);
   display: grid;
   place-items: center;
-  color: var(--text);
+  color: var(--navy-deep);
 }
 .round-next svg {
   width: 20px;
@@ -224,7 +242,8 @@ button {
 
 /* ---- Home: greeting ------------------------------------------------------- */
 .greeting {
-  padding: 4px 20px 2px;
+  padding: 10px 20px 2px;
+  color: var(--navy-deep);
 }
 .greeting .hi {
   font-size: 26px;
@@ -251,12 +270,14 @@ button {
 /* ---- Próxima aula card ---------------------------------------------------- */
 .next-class {
   margin: 0 20px;
+  background: var(--navy);
+  color: #fff;
 }
 .nc-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 16px;
-  color: var(--text-dim);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 14px;
   margin-bottom: 14px;
 }
@@ -278,14 +299,14 @@ button {
   overflow-wrap: anywhere;
 }
 .nc-turma {
-  color: var(--text-dim);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 14px;
   margin-top: 2px;
 }
 .nc-loc {
   margin-top: 16px;
   font-size: 15px;
-  color: var(--text);
+  color: #fff;
 }
 
 /* ---- Quick access carousel ------------------------------------------------ */
@@ -387,7 +408,7 @@ button {
   gap: 16px;
 }
 .year .y {
-  color: var(--accent);
+  color: var(--navy-deep);
   font-size: 22px;
   font-weight: 700;
 }
@@ -485,7 +506,7 @@ button {
   font-size: 13px;
 }
 .grade-final .val {
-  color: var(--accent);
+  color: var(--navy-deep);
   font-size: 30px;
   font-weight: 700;
   line-height: 1.1;
@@ -627,12 +648,12 @@ button {
   width: 68px;
   height: 68px;
   border-radius: 16px;
-  background: var(--bg);
+  background: var(--surface-3);
   display: grid;
   place-items: center;
   font-size: 22px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--navy-deep);
   flex-shrink: 0;
 }
 .profile-card .pname {
@@ -647,7 +668,7 @@ button {
 }
 .menu-version {
   text-align: center;
-  color: var(--accent-2);
+  color: var(--navy-deep);
   font-weight: 700;
   font-size: 15px;
   padding: 20px 0 8px;
@@ -693,7 +714,7 @@ button {
   max-width: 480px;
   height: calc(var(--tabbar-h) + var(--safe-bottom));
   padding-bottom: var(--safe-bottom);
-  background: rgba(22, 24, 25, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-top: 1px solid var(--hairline);
@@ -709,8 +730,11 @@ button {
   justify-content: center;
   gap: 4px;
   padding: 0 2px;
-  color: var(--accent); /* icons are colored on every tab */
+  color: var(--text-faint); /* inactive icons gray */
   font-size: 11px;
+}
+.tab.active {
+  color: var(--navy-deep); /* active icon navy */
 }
 .tab svg {
   width: 24px;
@@ -721,11 +745,11 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--text-dim);
+  color: var(--text-faint);
   font-weight: 500;
 }
 .tab.active .lbl {
-  color: var(--text);
+  color: var(--navy-deep);
   font-weight: 700;
 }
 
@@ -860,4 +884,85 @@ button {
   .sheet {
     transition: none;
   }
+}
+
+/* ---- Light-theme card lift ------------------------------------------------ */
+.card,
+.qa,
+.row,
+.gcard,
+.profile-card,
+.semtabs,
+.banner-card {
+  box-shadow: var(--shadow);
+}
+
+/* ---- Home: promo banner carousel ------------------------------------------ */
+.banners {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 18px 20px 6px;
+  scroll-snap-type: x mandatory;
+}
+.banners::-webkit-scrollbar {
+  display: none;
+}
+.banner-card {
+  scroll-snap-align: start;
+  flex: 0 0 86%;
+  min-height: 190px;
+  border-radius: 20px;
+  padding: 18px 18px 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: #fff;
+  overflow: hidden;
+}
+.bn-cert {
+  background: linear-gradient(165deg, #b9cbe6 0%, #93aecf 58%);
+}
+.bn-cert .b-tag {
+  align-self: flex-start;
+  background: #e8541f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+.bn-cert .b-head {
+  color: var(--navy-deep);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.1;
+  margin-top: 12px;
+}
+.bn-cert .b-foot {
+  margin: auto -18px 0;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 14px 18px;
+}
+.bn-sent {
+  background: linear-gradient(135deg, #2b7fbf 0%, #073f73 100%);
+  justify-content: flex-end;
+}
+.bn-sent .b-head2 {
+  font-style: italic;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.02;
+  letter-spacing: -0.5px;
+}
+.bn-sent .b-foot2 {
+  margin-top: 10px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
 }

@@ -7,17 +7,19 @@ window.DATA = {
   },
 
   nextClass: {
-    day: "Quarta-Feira",
-    time: "09:45 - 10:30",
-    title: "LÓGICA PARA COMPUTAÇÃO",
+    day: "Quinta-Feira",
+    time: "08:00 - 08:45",
+    title: "FUNDAMENTOS DE SISTEMAS COMPUTACIONAIS",
     turma: "Turma 110",
-    location: "Prédio 32 • Bloco A • Sala 413",
+    location: "Prédio 32 • Bloco A • Sala 414",
   },
 
   quickAccess: [
     { icon: "qr", color: "c-cyan", tag: "Acesso\nRápido", label: "Chamada", sub: "QR Code", action: "chamada" },
     { icon: "dollar", color: "c-gold", label: "Mensalidade", sub: "Ver detalhes", action: "mensalidade" },
     { icon: "qr", color: "c-pink", label: "Gerar Token", sub: "QR Code", action: "token" },
+    { icon: "userX", color: "c-cyan", tag: "Faltas\n0", label: "Introdução À Ciência De Dados", sub: "Aulas: 70", action: "frequencia" },
+    { icon: "idCard", color: "c-cyan", label: "Cartão Acadêmico", sub: "Ver cartão", action: "cartao" },
     { icon: "book", color: "c-green", label: "Biblioteca", sub: "Empréstimos", action: "biblioteca" },
   ],
 
@@ -47,15 +49,15 @@ window.DATA = {
         { status: "Cursada", name: "Fundamentos De Programação", turma: "Turma 14", prof: "Adriana Paula Zamin Scherer", final: "8.6", result: "Aprovado", count: 9, updated: "18/07", evals: [
           { k: "T1", v: "7.6" }, { k: "T2", v: "8.9" }, { k: "P1", v: "9.3" } ] },
         { status: "Cursada", name: "Matemática Discreta", turma: "Turma 13", prof: "Edson Ifarraguirre Moreno", final: "9.1", result: "Aprovado", count: 8, updated: "08/07", evals: [
-          { k: "T1", v: "8.8" }, { k: "T2", v: "9.2" }, { k: "P1", v: "9.3" } ] },
+          { k: "T1", v: "8.6" }, { k: "T2", v: "9.3" }, { k: "P1", v: "9.4" } ] },
       ],
       S2: [
         { status: "Matriculada", name: "Algoritmos E Estruturas De Dados I", turma: "Turma 110", prof: "Isabel Harb Manssour", count: 2, updated: "15/10", evals: [
-          { k: "T1", v: "8.7" }, { k: "T2", v: "9.3" } ] },
+          { k: "T1", v: "8.9" }, { k: "T2", v: "9.1" } ] },
         { status: "Matriculada", name: "Cálculo Ii", turma: "Turma 110", prof: "Iuri Medeiros Jauris", count: 4, updated: "02/11", evals: [
           { k: "T1", v: "8.4" }, { k: "T2", v: "9.1" }, { k: "T3", v: "9.2" }, { k: "P1", v: "9.3" } ] },
         { status: "Matriculada", name: "Fundamentos De Sistemas Computacionais", turma: "Turma 110", prof: "Fabiano Passuelo Hessel", count: 3, updated: "19/10", evals: [
-          { k: "T1", v: "8.6" }, { k: "T2", v: "9.1" }, { k: "P1", v: "9.3" } ] },
+          { k: "T1", v: "8.4" }, { k: "T2", v: "9.3" }, { k: "P1", v: "9.3" } ] },
         { status: "Matriculada", name: "Lógica Para Computação", turma: "Turma 110", prof: "Edson Ifarraguirre Moreno", count: 2, updated: "17/10", evals: [
           { k: "T1", v: "9.2" }, { k: "T2", v: "8.8" } ] },
         { status: "Matriculada", name: "Probabilidade E Estatística", turma: "Turma 110", prof: "Rossana Fraga Benites", count: 4, updated: "21/10", evals: [
