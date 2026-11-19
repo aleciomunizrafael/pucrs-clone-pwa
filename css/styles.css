@@ -110,6 +110,12 @@ button {
   flex: 1 1 0;
   min-height: 4px;
 }
+/* Seções fixas nunca encolhem: só os .vspacer absorvem/liberam o espaço.
+   Sem isso, quando o conteúdo aperta, o flex espremia o .quick/.banners e
+   cortava os cards de 150px durante o scroll. */
+.screen[data-tab="home"] > *:not(.vspacer) {
+  flex-shrink: 0;
+}
 
 /* ---- Header --------------------------------------------------------------- */
 /* Home: light header blending into the lavender bg (navy content).
